@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Animated Login/Signup</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div class="form-box">
+                <div class="form-header">
+                    <h2>Welcome Back</h2>
+                    <p>Please login to your account</p>
+                </div>
+                <form class="login-form active">
+                    <div class="input-group">
+                        <input type="email" name="email" required>
+                        <label>Email</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" name="password" required>
+                        <label>Password</label>
+                    </div>
+                    <button type="submit" class="btn">Login</button>
+                </form>
+
+                <form class="signup-form">
+                    <div class="input-group">
+                        <input type="text" name="username" required>
+                        <label>Username</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" name="email" required>
+                        <label>Email</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" name="password" required>
+                        <label>Password</label>
+                        <div class="password-strength">
+                            <div class="password-strength-bar"></div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" name="confirmPassword" required>
+                        <label>Confirm Password</label>
+                    </div>
+                    <div class="form-group profile-photo-upload">
+                        <label for="profile-photo">Profile Photo</label>
+                        <input type="file" id="profile-photo" accept="image/*">
+                        <div class="photo-preview">
+                            <img id="photo-preview" src="https://via.placeholder.com/150" alt="Profile Photo Preview">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">Sign Up</button>
+                </form>
+
+                <div class="form-footer">
+                    <p>Don't have an account? <a href="#" class="switch-form">Sign Up</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="congrats-container">
+            <div class="congrats-box">
+                <div class="congrats-header">
+                    <h2>Congratulations!</h2>
+                    <p>Your account has been created successfully</p>
+                </div>
+                <div class="congrats-content">
+                    <div class="checkmark">✓</div>
+                    <p>Welcome to our community!</p>
+                    <button class="btn" id="continue-btn">Continue to Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="music-player.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="music-player">
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-music"></i>
+                <span>Music Player</span>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active" data-section="home"><i class="fas fa-home"></i> Home</li>
+                    <li data-section="library"><i class="fas fa-book"></i> Your Library</li>
+                    <li data-section="upload"><i class="fas fa-upload"></i> Upload Songs</li>
+                </ul>
+            </nav>
+            <div class="playlists">
+                <h3>YOUR PLAYLISTS</h3>
+                <ul id="playlist-list">
+                    <!-- Playlists will be added here dynamically -->
+                </ul>
+                <button class="create-playlist-btn">
+                    <i class="fas fa-plus"></i> Create Playlist
+                </button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="top-bar">
+                <div class="navigation">
+                    <button class="nav-btn"><i class="fas fa-chevron-left"></i></button>
+                    <button class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search for songs, artists, or albums">
+                </div>
+                <div class="user-profile">
+                    <div class="profile-dropdown">
+                        <div class="profile-header">
+                            <img id="user-profile-photo" src="https://via.placeholder.com/40" alt="Profile">
+                            <span id="username">User</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="dropdown-menu">
+                            <div class="menu-section">
+                                <h4>Account</h4>
+                                <ul>
+                                    <li><i class="fas fa-user"></i> View Profile</li>
+                                    <li><i class="fas fa-cog"></i> Settings</li>
+                                    <li><i class="fas fa-moon"></i> Dark Mode</li>
+                                </ul>
+                            </div>
+                            <div class="menu-section">
+                                <h4>Playlists</h4>
+                                <ul>
+                                    <li><i class="fas fa-plus"></i> Create Playlist</li>
+                                    <li><i class="fas fa-heart"></i> Liked Songs</li>
+                                    <li><i class="fas fa-history"></i> Recently Played</li>
+                                </ul>
+                            </div>
+                            <div class="menu-section">
+                                <h4>Spotify</h4>
+                                <ul>
+                                    <li id="spotify-connect"><i class="fab fa-spotify"></i> Connect Spotify</li>
+                                    <li><i class="fas fa-sign-out-alt"></i> Logout</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content">
+                <!-- Home Section -->
+                <div class="section active" id="home-section">
+                    <div class="recently-played">
+                        <h2>Recently Added</h2>
+                        <div class="song-grid" id="recent-songs">
+                            <!-- Recent songs will be added here dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Library Section -->
+                <div class="section" id="library-section">
+                    <h2>Your Library</h2>
+                    <div class="song-list" id="library-songs">
+                        <!-- Library songs will be added here dynamically -->
+                    </div>
+                </div>
+
+                <!-- Upload Section -->
+                <div id="upload-section" class="section">
+                    <div class="upload-container">
+                        <div class="permission-status">
+                            <span id="permission-status">File system access: Not granted</span>
+                            <button id="request-permission" class="permission-btn">
+                                <i class="fas fa-folder-open"></i> Grant File Access
+                            </button>
+                        </div>
+                        <div class="upload-box" id="upload-box">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3>Upload Music</h3>
+                            <p>Drag and drop music files here or click to select</p>
+                            <input type="file" id="file-input" accept="audio/*" multiple webkitdirectory directory>
+                            <div class="upload-progress">
+                                <div class="upload-progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="now-playing">
+                <div class="album-art">
+                    <img src="https://via.placeholder.com/300" alt="Album Art">
+                </div>
+                <div class="song-info">
+                    <h2>No song selected</h2>
+                    <p>Select a song to play</p>
+                </div>
+                <div class="player-controls">
+                    <button class="control-btn"><i class="fas fa-random"></i></button>
+                    <button class="control-btn"><i class="fas fa-step-backward"></i></button>
+                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                    <button class="control-btn"><i class="fas fa-step-forward"></i></button>
+                    <button class="control-btn"><i class="fas fa-redo"></i></button>
+                </div>
+                <div class="progress-bar">
+                    <span class="current-time">0:00</span>
+                    <div class="progress">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <span class="total-time">0:00</span>
+                </div>
+                <div class="volume-control">
+                    <i class="fas fa-volume-up"></i>
+                    <div class="volume-slider">
+                        <div class="volume-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Playlist Modal -->
+    <div class="modal" id="create-playlist-modal">
+        <div class="modal-content">
+            <h2>Create New Playlist</h2>
+            <input type="text" id="playlist-name" placeholder="Playlist name">
+            <div class="modal-buttons">
+                <button class="cancel-btn">Cancel</button>
+                <button class="create-btn">Create</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add this inside the body, before the closing body tag -->
+    <div class="modal settings-modal" id="settings-modal">
+        <div class="modal-content settings-content">
+            <div class="settings-header">
+                <h2>Settings</h2>
+                <button class="close-btn" onclick="closeSettings()">×</button>
+            </div>
+            
+            <div class="settings-sections">
+                <!-- Account Settings -->
+                <div class="settings-section">
+                    <h3>Account Settings</h3>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span>Profile Picture</span>
+                            <button class="change-avatar-btn">Change Avatar</button>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span>Username</span>
+                            <input type="text" value="Music Lover" class="settings-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Playback Settings -->
+                <div class="settings-section">
+                    <h3>Playback Settings</h3>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span>Audio Quality</span>
+                            <select class="settings-select">
+                                <option>High (320 kbps)</option>
+                                <option>Medium (160 kbps)</option>
+                                <option>Low (96 kbps)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span>Crossfade</span>
+                            <input type="range" min="0" max="12" value="0" class="settings-slider">
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span>Autoplay</span>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theme Settings -->
+                <div class="settings-section">
+                    <h3>Theme Settings</h3>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span>Dark Mode</span>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span>Accent Color</span>
+                            <div class="color-options">
+                                <button class="color-option active" style="background: #1DB954;"></button>
+                                <button class="color-option" style="background: #FF0000;"></button>
+                                <button class="color-option" style="background: #0000FF;"></button>
+                                <button class="color-option" style="background: #FFD700;"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Storage Settings -->
+                <div class="settings-section">
+                    <h3>Storage Settings</h3>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span>Clear Cache</span>
+                            <button class="clear-cache-btn">Clear</button>
+                        </div>
+                    </div>
+                    <div class="storage-info">
+                        <div class="storage-bar">
+                            <div class="storage-used" style="width: 65%;"></div>
+                        </div>
+                        <span>6.5 GB of 10 GB used</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-footer">
+                <button class="cancel-btn" onclick="closeSettings()">Cancel</button>
+                <button class="save-btn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add this before the closing body tag -->
+    <div class="modal profile-edit-modal" id="profile-edit-modal">
+        <div class="modal-content profile-edit-content">
+            <div class="modal-header">
+                <h2>Edit Profile</h2>
+                <button class="close-btn" onclick="closeProfileEdit()">×</button>
+            </div>
+            
+            <div class="profile-edit-form">
+                <div class="profile-picture-section">
+                    <div class="current-profile-pic">
+                        <img src="https://api.dicebear.com/6.x/adventurer/svg?seed=music-lover" alt="Profile Picture">
+                    </div>
+                    <div class="profile-pic-controls">
+                        <button class="change-pic-btn">Change Picture</button>
+                        <button class="random-avatar-btn">Random Avatar</button>
+                    </div>
+                </div>
+
+                <div class="profile-fields">
+                    <div class="form-group">
+                        <label for="display-name">Display Name</label>
+                        <input type="text" id="display-name" class="profile-input" placeholder="Enter your display name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bio">Bio</label>
+                        <textarea id="bio" class="profile-input" placeholder="Tell us about yourself" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="favorite-genre">Favorite Genre</label>
+                        <select id="favorite-genre" class="profile-input">
+                            <option value="">Select a genre</option>
+                            <option value="rock">Rock</option>
+                            <option value="pop">Pop</option>
+                            <option value="jazz">Jazz</option>
+                            <option value="classical">Classical</option>
+                            <option value="electronic">Electronic</option>
+                            <option value="hip-hop">Hip Hop</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Profile Visibility</label>
+                        <div class="visibility-toggle">
+                            <label class="switch">
+                                <input type="checkbox" id="profile-visibility" checked>
+                                <span class="slider round"></span>
+                            </label>
+                            <span class="visibility-label">Public Profile</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeProfileEdit()">Cancel</button>
+                <button class="save-btn" onclick="saveProfile()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="song-manager.js"></script>
+    <script src="spotify-api.js"></script>
+    <script src="music-player.js"></script>
+</body>
+</html> 

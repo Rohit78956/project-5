@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Callback</title>
+</head>
+<body>
+    <script src="spotify-api.js"></script>
+    <script>
+        const spotifyApi = new SpotifyAPI();
+        
+        // Get the authorization code from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        
+        if (code) {
+            spotifyApi.handleCallback(code).then(success => {
+                if (success) {
+                    window.location.href = 'music-player.html';
+                } else {
+                    console.error('Failed to authenticate with Spotify');
+                }
+            });
+        }
+    </script>
+</body>
+</html> 
